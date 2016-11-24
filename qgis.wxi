@@ -1,7 +1,12 @@
-<?if $(var.AppPackage) = qgis-ltr ?>
-  <?define AppVersion="2.14.8"?>
-  <?define AppName="QGIS $(var.AppVersion)"?>
-<?endif ?>
+<?xml version="1.0" encoding="utf-8"?> 
+<Include>
+  <?if $(var.AppPackage) = qgis-ltr ?>
+    <?define AppVersion="2.14.8"?>
+    <?define AppName="QGIS $(var.AppVersion)"?>
+  <?else?>
+    <?error QGIS package $(var.AppPackage) not supported yet.. ?>
+  <?endif ?>
 
-<?define ShortcutName=$(var.AppName)?>
-<?define AppIcon="$(var.QGISPATH)\apps\$(var.AppPackage)\icons\qgis.ico" ?>
+  <?define ShortcutName=$(var.AppName)?>
+  <?define AppIcon="$(var.QGISPATH)\apps\$(var.AppPackage)\icons\qgis.ico" ?>
+</Include>

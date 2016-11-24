@@ -5,14 +5,13 @@
            UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3"
            Name="$(var.AppName)"
            Version="$(var.AppVersion)"
-           Description="QGIS $(var.AppVersion)"
-           Comments="MSI package created by TechnologyOne"
            Manufacturer="QGIS Development Team; TechnologyOne"
            Language="1033">
     <Package Platform="x64"
              InstallerVersion="200"
-             Compressed="yes"
-             Comments="Windows Installer Package"/>
+             Description="QGIS $(var.AppVersion)"
+             Comments="MSI package created by TechnologyOne"
+             Compressed="yes"/>
     <Media Id='1' Cabinet='qgis.cab' EmbedCab='yes'/>
 
     <Icon Id="qgis.ico" SourceFile="$(var.AppIcon)" />
@@ -23,10 +22,10 @@
       <Directory Id="ProgramFiles64Folder">
         <Directory Id="qgisroot" Name="$(var.AppName)">
           <Component Id="rootfiles" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
-              <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
-              <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
-              <File Id="filemsvcr110" Source="$(var.QGISPATH)\msvcr110.dll" />
-              <File Id="fileOSGeo4Wico" Source="$(var.QGISPATH)\OSGeo4W.ico" />
+            <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
+            <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
+            <File Id="filemsvcr110" Source="$(var.QGISPATH)\msvcr110.dll" />
+            <File Id="fileOSGeo4Wico" Source="$(var.QGISPATH)\OSGeo4W.ico" />
           </Component>
           <Directory Id="BIN_REF" Name="bin" />
           <Directory Id="APP_REF" Name="apps" />
