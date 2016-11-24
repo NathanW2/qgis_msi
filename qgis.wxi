@@ -1,0 +1,7 @@
+<?if $(var.AppPackage) = qgis-ltr ?>
+  <?define AppVersion="2.14.8"?>
+  <?define AppName="QGIS $(var.AppVersion)"?>
+<?endif ?>
+
+<?define ShortcutName=$(var.AppName)?>
+<?define AppIcon="$(var.QGISPATH)\apps\$(var.AppPackage)\icons\qgis.ico" ?>
