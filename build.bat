@@ -37,7 +37,6 @@ REM call collectfiles
 candle %WXSFILES% %VARS% %ARGS% -out %~dp0\build\
 IF ERRORLEVEL 1 GOTO ERROR
 light %WIXOBJ% -out "%NAME%".msi %VARS% %ARGS%
-IF ERRORLEVEL 1 GOTO ERROR
 rem candle ini.wxs bin.wxs app.wxs qgis.wxs %VARS%
 rem light ini.wixobj bin.wixobj app.wixobj qgis.wixobj -out qgis %VARS%
 :ERROR
