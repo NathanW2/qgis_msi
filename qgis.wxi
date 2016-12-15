@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <Include>
   <?if $(var.AppPackage) = qgis-ltr ?>
+    <?define AppVersionMajor="2.14"?>
     <?define AppVersion="2.14.8"?>
     <?define AppName="QGIS $(var.AppVersion)"?>
+    <?define AppRoot="QGIS $(var.AppVersionMajor)"?>
   <?else?>
     <?error QGIS package $(var.AppPackage) not supported yet.. ?>
   <?endif ?>

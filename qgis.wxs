@@ -20,7 +20,7 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFiles64Folder">
-        <Directory Id="qgisroot" Name="$(var.AppName)">
+        <Directory Id="qgisroot" Name="$(var.AppRoot)">
           <Component Id="rootfiles" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
             <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
             <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
@@ -40,10 +40,10 @@
       <Directory Id="DesktopFolder">
         <Component Id="ApplicationShortcutDesktop" Guid="c98307c2-173b-427d-bafd-9af55e496327">
           <Shortcut Id="DesktopShortcut" 
-                    Name="QGIS Desktop $(var.AppVersion)"
+                    Name="QGIS Desktop $(var.AppRoot)"
                     Description="$(var.AppName)"
-                    Target="[BIN_REF]\nircmd.exe"
-                    Arguments="exec hide [BIN_REF]\qgis.bat"
+                    Target="[BIN_REF]nircmd.exe"
+                    Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
                     WorkingDirectory="BIN_REF"
                     Icon="qgis.ico"/>
         </Component>
@@ -55,8 +55,8 @@
             <Shortcut Id="ApplicationStartMenuShortcut" 
                       Name="QGIS Desktop $(var.AppVersion)"
                       Description="$(var.AppName)"
-                      Target="[BIN_REF]\nircmd.exe"
-                      Arguments="exec hide [BIN_REF]\qgis.bat"
+                      Target="[BIN_REF]nircmd.exe"
+                      Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
                       WorkingDirectory="BIN_REF"
                       Icon="qgis.ico"/>
           </Component>
