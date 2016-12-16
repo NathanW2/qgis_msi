@@ -1,5 +1,5 @@
 call env.bat
-SET BASE=%~dp0..\OSGeo4W64
+SET BASE=%~dp0\OSGeo4W64
 SET FLAGS=-template fragment -sreg -sfrag -ag -srd
 heat dir "%BASE%\bin" -cg bin -dr BIN_REF -out build\bin.wxs -var var.BINPATH %FLAGS%
 heat dir "%BASE%\apps" -cg app -dr APP_REF  -out build\app.wxs -var var.APPPATH %FLAGS%

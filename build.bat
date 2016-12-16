@@ -1,6 +1,6 @@
 @ECHO OFF
 SET PATH=%PATH%;"C:\Program Files (x86)\WiX Toolset v3.10\bin"
-SET BASE=%~dp0..\OSGeo4W64
+SET BASE=%~dp0OSGeo4W64
 SET NAME=QGIS 2.14
 SET PACKAGE=qgis-ltr
 SET CANDELARGS=
