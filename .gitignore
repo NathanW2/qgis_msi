@@ -1,2 +1,4 @@
 OSGeo4W64/
 build/
+*.wixpdb
+*.msi

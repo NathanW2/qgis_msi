@@ -1,7 +1,7 @@
 ﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include qgis.wxi ?>
 
-  <Product Id="*"
+  <Product Id="9012b3c2-6362-4db8-ab69-bc9e9bc9e414"
            UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3"
            Name="$(var.AppName)"
            Version="$(var.AppVersion)"
@@ -20,7 +20,7 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFiles64Folder">
-        <Directory Id="qgisroot" Name="$(var.AppRoot)">
+        <Directory Id="INSTALLLOCATION" Name="$(var.AppRoot)">
           <Component Id="rootfiles" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
             <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
             <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
@@ -46,6 +46,8 @@
                     Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
                     WorkingDirectory="BIN_REF"
                     Icon="qgis.ico"/>
+            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
         </Component>
       </Directory>
 
@@ -60,6 +62,8 @@
                       WorkingDirectory="BIN_REF"
                       Icon="qgis.ico"/>
           </Component>
+          <RemoveFolder Id="ApplicationShortcutDesktop" On="uninstall"/>
+          <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
         </Directory>
       </Directory>
     </Directory>

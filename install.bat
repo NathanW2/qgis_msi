@@ -1,1 +1,1 @@
-msiexec /i "qgis.msi" TARGETDIR="F:\QGIS\WiX installer\installr"
+msiexec /i "qgis.msi" TARGETDIR="F:\temp\QGIS_Install"
