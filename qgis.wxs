@@ -1,13 +1,19 @@
 ﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include qgis.wxi ?>
-
+  <?if $(var.Platform) = x64 ?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+    <?define Win64 = "no" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+  <?endif ?>
   <Product Id="9012b3c2-6362-4db8-ab69-bc9e9bc9e414"
            UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3"
            Name="$(var.AppName)"
            Version="$(var.AppVersion)"
            Manufacturer="QGIS Development Team; TechnologyOne"
            Language="1033">
-    <Package Platform="x64"
+    <Package Platform="$(var.Platform)"
              InstallerVersion="200"
              Description="QGIS $(var.AppVersion)"
              Comments="MSI package created by TechnologyOne"
@@ -19,9 +25,9 @@
     <Property Id="ARPHELPLINK" Value="http://www.qgis.com/" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
-      <Directory Id="ProgramFiles64Folder">
+      <Directory Id="$(var.PlatformProgramFilesFolder)">
         <Directory Id="INSTALLLOCATION" Name="$(var.AppRoot)">
-          <Component Id="rootfiles" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
+          <Component Id="rootfiles" Win64="yes" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
             <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
             <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
             <File Id="filemsvcr110" Source="$(var.QGISPATH)\msvcr110.dll" />
@@ -46,8 +52,8 @@
                     Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
                     WorkingDirectory="BIN_REF"
                     Icon="qgis.ico"/>
-            <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-            <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+          <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+          <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
         </Component>
       </Directory>
 
@@ -61,9 +67,9 @@
                       Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
                       WorkingDirectory="BIN_REF"
                       Icon="qgis.ico"/>
+            <RemoveFolder Id="ApplicationShortcutDesktop" On="uninstall"/>
+            <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
           </Component>
-          <RemoveFolder Id="ApplicationShortcutDesktop" On="uninstall"/>
-          <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
         </Directory>
       </Directory>
     </Directory>

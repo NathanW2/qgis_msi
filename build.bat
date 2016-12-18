@@ -3,8 +3,8 @@ SET PATH=%PATH%;"C:\Program Files (x86)\WiX Toolset v3.10\bin"
 SET BASE=%~dp0OSGeo4W64
 SET NAME=QGIS 2.14
 SET PACKAGE=qgis-ltr
-SET CANDELARGS=
 SET VARS=-dQGISPATH="%BASE%" ^
+-dPlatform="x64" ^
 -dAPPPATH="%BASE%\apps" ^
 -dBINPATH="%BASE%\bin" ^
 -dETCPATH="%BASE%\etc" ^
@@ -34,8 +34,7 @@ build\var.wixobj
 
 REM call collectfiles
 
-candle %WXSFILES% %VARS% %ARGS% -out %~dp0\build\
-IF ERRORLEVEL 1 GOTO ERROR
+candle %WXSFILES% %VARS% %ARGS% -out %~dp0\build\ -arch x64
 light %WIXOBJ% -out "%NAME%".msi %VARS% %ARGS%
 rem candle ini.wxs bin.wxs app.wxs qgis.wxs %VARS%
 rem light ini.wixobj bin.wixobj app.wixobj qgis.wixobj -out qgis %VARS%
