@@ -1,17 +1,11 @@
 ﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include qgis.wxi ?>
-  <?if $(var.Platform) = x64 ?>
-    <?define Win64 = "yes" ?>
-    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
-  <?else ?>
-    <?define Win64 = "no" ?>
-    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
-  <?endif ?>
+
   <Product Id="9012b3c2-6362-4db8-ab69-bc9e9bc9e414"
            UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3"
            Name="$(var.AppName)"
            Version="$(var.AppVersion)"
-           Manufacturer="QGIS Development Team; TechnologyOne"
+           Manufacturer="QGIS Development Team; Installer by TechnologyOne"
            Language="1033">
     <Package Platform="$(var.Platform)"
              InstallerVersion="200"
@@ -20,14 +14,20 @@
              Compressed="yes"/>
     <Media Id='1' Cabinet='qgis.cab' EmbedCab='yes'/>
 
-    <Icon Id="qgis.ico" SourceFile="$(var.AppIcon)" />
-    <Property Id="ARPPRODUCTICON" Value="$(var.AppIcon)" />
-    <Property Id="ARPHELPLINK" Value="http://www.qgis.com/" />
+    <Icon Id="qgis.ico" SourceFile="$(var.QGISIcon)" />
+
+    <Property Id="ARPPRODUCTICON" Value="$(var.QGISIcon)" />
+    <Property Id="ARPHELPLINK" Value="http://www.qgis.org" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+
+    <WixVariable Id="WixUILicenseRtf" Value="resources\License.rtf" />
+
+    <UIRef Id="WixUI_InstallDir" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
         <Directory Id="INSTALLLOCATION" Name="$(var.AppRoot)">
-          <Component Id="rootfiles" Win64="yes" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
+          <Component Id="rootfiles" Win64="$(var.Win64)" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
             <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
             <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
             <File Id="filemsvcr110" Source="$(var.QGISPATH)\msvcr110.dll" />

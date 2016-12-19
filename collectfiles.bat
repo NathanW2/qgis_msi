@@ -8,5 +8,3 @@ heat dir "%BASE%\include" -cg include -dr INCLUDE_REF  -out build\include.wxs -v
 heat dir "%BASE%\lib" -cg lib -dr LIB_REF  -out build\lib.wxs -var var.LIBPATH %FLAGS%
 heat dir "%BASE%\share" -cg share -dr SHARE_REF  -out build\share.wxs -var var.SHAREPATH %FLAGS%
 heat dir "%BASE%\var" -cg var -dr VAR_REF  -out build\var.wxs -var var.VARPATH %FLAGS%
-rem heat dir "C:\Program Files\QGIS 2.14\bin " -ag -cg bin -dr BIN_REF -template fragment -sreg -sfrag -out bin.wxs -srd -gg -var var.BINPATH
-rem heat dir "C:\Program Files\QGIS 2.14\etc\ini" -ag -cg ini -dr INI_REF -template fragment -sreg -sfrag -out ini.wxs -srd -gg -var var.INIPATH

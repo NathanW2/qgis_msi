@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <Include>
-  <?if $(var.AppPackage) = qgis-ltr ?>
-    <?define AppVersionMajor="2.14"?>
-    <?define AppVersion="2.14.8"?>
-    <?define AppName="QGIS $(var.AppVersion)"?>
-    <?define AppRoot="QGIS $(var.AppVersionMajor)"?>
-  <?else?>
-    <?error QGIS package $(var.AppPackage) not supported yet.. ?>
+  <?if $(var.Platform) = x64 ?>
+    <?define Win64 = "yes" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+  <?else ?>
+    <?define Win64 = "no" ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
   <?endif ?>
 
-  <?define ShortcutName=$(var.AppName)?>
-  <?define AppIcon="$(var.QGISPATH)\apps\$(var.AppPackage)\icons\qgis.ico" ?>
+  <?define AppVersionMajor="$(var.Major).$(var.Minor)"?>
+  <?define AppVersion="$(var.Major).$(var.Minor).$(var.Patch)"?>
+  <?define AppName="QGIS $(var.AppVersion)"?>
+  <?define AppRoot="QGIS $(var.AppVersionMajor)"?>
+
+  <?define QGISIcon="resources\qgis.ico" ?>
 </Include>
