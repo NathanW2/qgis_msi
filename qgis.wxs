@@ -12,7 +12,7 @@
              Description="QGIS $(var.AppVersion)"
              Comments="MSI package created by TechnologyOne"
              Compressed="yes"/>
-    <Media Id='1' Cabinet='qgis.cab' EmbedCab='yes'/>
+    <Media Id='1' Cabinet='qgis.cab' EmbedCab='yes' CompressionLevel="high"/>
 
     <Icon Id="qgis.ico" SourceFile="$(var.QGISIcon)" />
 
