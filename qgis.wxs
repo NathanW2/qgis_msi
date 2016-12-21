@@ -1,4 +1,4 @@
-﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include qgis.wxi ?>
 
   <Product Id="$(var.ProductCode)"
@@ -11,8 +11,14 @@
              InstallerVersion="200"
              Description="QGIS $(var.AppVersion)"
              Comments="MSI package created by TechnologyOne"
+             InstallScope="perMachine"
              Compressed="yes"/>
+
     <Media Id='1' Cabinet='qgis.cab' EmbedCab='yes' CompressionLevel="high"/>
+
+    <MajorUpgrade
+      Schedule="afterInstallInitialize"
+      DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 
     <Icon Id="qgis.ico" SourceFile="$(var.QGISIcon)" />
 
@@ -20,6 +26,9 @@
     <Property Id="ARPHELPLINK" Value="http://www.qgis.org" />
     <Property Id="ApplicationFolderName" Value="$(var.AppRoot)" />
     <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
+
+    <!-- TODO Disable per user installs for now because I can't get it to work right. -->
+    <WixVariable Id="WixUISupportPerUser" Value="0" />
     <WixVariable Id="WixUILicenseRtf" Value="resources\License.rtf" />
 
     <UIRef Id="WixUI_Advanced" />
