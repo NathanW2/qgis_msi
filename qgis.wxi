@@ -14,4 +14,10 @@
   <?define AppRoot="QGIS $(var.AppVersionMajor)"?>
 
   <?define QGISIcon="resources\qgis.ico" ?>
+  <?if $(var.AppVersionMajor) = 2.14 ?>
+    <?define ProductCode="9012b3c2-6362-4db8-ab69-bc9e9bc9e414" ?>
+  <?else ?>
+    <!-- TODO Add product codes for other major versions of QGIS.-->
+    <?define ProductCode="*" ?>
+  <?endif ?>
 </Include>

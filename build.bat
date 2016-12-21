@@ -1,15 +1,15 @@
 @ECHO OFF
 SET PATH=%PATH%;"C:\Program Files (x86)\WiX Toolset v3.10\bin"
-SET BASE=%~dp0OSGeo4W64
+SET BASE=%~dp0OSGeo4W64_Fake
 SET MAJOR=2
 SET MINOR=14
 SET PATCH=1
-SET NAME=QGIS %MAJOR%.%MINOR%
-SET PACKAGE=qgis-ltr
-SET ARGS=-ext WixUIExtension
-SET LIGHTARGS=-sice:ICE60 -v -nologo -pedantic
-SET CANDLEARGS=-arch x64
 SET PLATFORM=x64
+SET NAME=QGIS-OSGeo4W-%MAJOR%.%MINOR%.%PATCH%-%PLATFORM%.msi
+SET PACKAGE=qgis-ltr
+SET ARGS=-ext WixUIExtension -nologo
+SET LIGHTARGS=-sice:ICE60
+SET CANDLEARGS=-arch x64
 SET VARS=-dQGISPATH="%BASE%" ^
 -dPlatform=%PLATFORM% ^
 -dAPPPATH="%BASE%\apps" ^
@@ -27,9 +27,12 @@ SET VARS=-dQGISPATH="%BASE%" ^
 SET WXSFILES=*.wxs build\*.wxs
 SET WIXOBJ=build\*.wixobj
 
+ECHO Building using files from %BASE%
+ECHO QGIS Version: %MAJOR%.%MINOR%.%PATCH%
+ECHO 
 ECHO Collecting files...
 
-SET FLAGS=-template fragment -sreg -sfrag -ag -srd
+SET FLAGS=-template fragment -sreg -sfrag -ag -srd -nologo
 heat dir "%BASE%\bin" -cg bin -dr BIN_REF -out build\bin.wxs -var var.BINPATH %FLAGS%
 heat dir "%BASE%\apps" -cg app -dr APP_REF  -out build\app.wxs -var var.APPPATH %FLAGS%
 heat dir "%BASE%\etc" -cg etc -dr ETC_REF  -out build\etc.wxs -var var.ETCPATH %FLAGS%
@@ -44,5 +47,5 @@ DEL build\*.wixobj
 ECHO Making candle..
 candle %WXSFILES% %VARS% %ARGS% %CANDLEARGS% -out %~dp0\build\
 ECHO Lighting candle..
-light %WIXOBJ% -out "%NAME%.msi" %VARS% %ARGS% %LIGHTARGS%
-@pause
+light %WIXOBJ% -out "%NAME%" %VARS% %ARGS% %LIGHTARGS%
+ECHO Installer at %NAME%

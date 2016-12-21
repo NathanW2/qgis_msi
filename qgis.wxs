@@ -1,7 +1,7 @@
 ﻿<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include qgis.wxi ?>
 
-  <Product Id="9012b3c2-6362-4db8-ab69-bc9e9bc9e414"
+  <Product Id="$(var.ProductCode)"
            UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3"
            Name="$(var.AppName)"
            Version="$(var.AppVersion)"
@@ -18,15 +18,17 @@
 
     <Property Id="ARPPRODUCTICON" Value="$(var.QGISIcon)" />
     <Property Id="ARPHELPLINK" Value="http://www.qgis.org" />
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Property Id="ApplicationFolderName" Value="$(var.AppRoot)" />
+    <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
 
     <WixVariable Id="WixUILicenseRtf" Value="resources\License.rtf" />
 
-    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_Advanced" />
+
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
-        <Directory Id="INSTALLLOCATION" Name="$(var.AppRoot)">
+        <Directory Id="APPLICATIONFOLDER" Name="$(var.AppRoot)">
           <Component Id="rootfiles" Win64="$(var.Win64)" KeyPath="yes" Guid="c5e9ce2e-71c3-456b-a812-c06fab867d49">
             <File Id="fileOSGeo4Wbat" Source="$(var.QGISPATH)\OSGeo4W.bat" />
             <File Id="filemsvcp110" Source="$(var.QGISPATH)\msvcp110.dll" />
@@ -41,40 +43,48 @@
           <Directory Id="SHARE_REF" Name="share" />
           <Directory Id="VAR_REF" Name="var" />
         </Directory>
-      </Directory>
-
-      <Directory Id="DesktopFolder">
-        <Component Id="ApplicationShortcutDesktop" Guid="c98307c2-173b-427d-bafd-9af55e496327">
-          <Shortcut Id="DesktopShortcut" 
-                    Name="QGIS Desktop $(var.AppRoot)"
-                    Description="$(var.AppName)"
-                    Target="[BIN_REF]nircmd.exe"
-                    Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
-                    WorkingDirectory="BIN_REF"
-                    Icon="qgis.ico"/>
-          <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
-          <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-        </Component>
-      </Directory>
-
-      <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="$(var.AppName)">
-          <Component Id="ApplicationShortcut" Guid="8ffea946-dae2-49ac-8859-61ceff794ff1">
-            <Shortcut Id="ApplicationStartMenuShortcut" 
-                      Name="QGIS Desktop $(var.AppVersion)"
-                      Description="$(var.AppName)"
-                      Target="[BIN_REF]nircmd.exe"
-                      Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
-                      WorkingDirectory="BIN_REF"
-                      Icon="qgis.ico"/>
-            <RemoveFolder Id="ApplicationShortcutDesktop" On="uninstall"/>
-            <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
-          </Component>
+        <Directory Id="DesktopFolder">
+        </Directory>
+        <Directory Id="ProgramMenuFolder">
+          <Directory Id="QGISProgramsFolder" Name="$(var.AppRoot)"/>
         </Directory>
       </Directory>
     </Directory>
 
-    <Feature Id="DefaultFeature" Level="1">
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="QGSDesktopShortcutDesktop" Guid="c98307c2-173b-427d-bafd-9af55e496327">
+        <Shortcut Id="QGISDesktopShortcut" 
+                  Name="QGIS Desktop $(var.AppRoot)"
+                  Description="$(var.AppName)"
+                  Target="[BIN_REF]nircmd.exe"
+                  Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
+                  WorkingDirectory="BIN_REF"
+                  Icon="qgis.ico"/>
+        <RemoveFolder Id="ApplicationShortcutDesktop" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="QGISProgramsFolder">
+      <Component Id="QGISDesktopShortcutStartMenu" Guid="8ffea946-dae2-49ac-8859-61ceff794ff1">
+        <Shortcut Id="QGISStartMenuShortcut" 
+                  Name="QGIS Desktop $(var.AppRoot)"
+                  Description="$(var.AppName)"
+                  Target="[BIN_REF]nircmd.exe"
+                  Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
+                  WorkingDirectory="BIN_REF"
+                  Icon="qgis.ico"/>
+        <RemoveFolder Id="QGISProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <Feature Id="DefaultFeature" Level="1"
+             Title="QGIS"
+             Description="Core QGIS Install"
+             Display="expand"
+             Absent="disallow"
+             TypicalDefault="install">
       <ComponentRef Id="rootfiles" />    
       <ComponentGroupRef Id="bin" />    
       <ComponentGroupRef Id="app" />    
@@ -83,8 +93,14 @@
       <ComponentGroupRef Id="lib" />    
       <ComponentGroupRef Id="share" />    
       <ComponentGroupRef Id="var" />    
-      <ComponentRef Id="ApplicationShortcutDesktop" />    
-      <ComponentRef Id="ApplicationShortcut" />    
+      <Feature Id="ShortcutFeatures"
+               Level="1"
+               Title="Shortcuts"
+               TypicalDefault="install"
+               Description="Create shortcuts">
+        <ComponentRef Id="QGSDesktopShortcutDesktop" />
+        <ComponentRef Id="QGISDesktopShortcutStartMenu" />
+      </Feature>
     </Feature>
   </Product>
 </Wix>
