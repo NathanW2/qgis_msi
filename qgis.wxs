@@ -2,12 +2,13 @@
   <?include qgis.wxi ?>
 
   <Product Id="$(var.ProductCode)"
-           UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3"
+           UpgradeCode="$(var.UpgradeCode)"
            Name="$(var.AppName)"
            Version="$(var.AppVersion)"
            Manufacturer="QGIS Development Team; Installer by TechnologyOne"
            Language="1033">
-    <Package Platform="$(var.Platform)"
+    <Package Id="*"
+             Platform="$(var.Platform)"
              InstallerVersion="200"
              Description="QGIS $(var.AppVersion)"
              Comments="MSI package created by TechnologyOne"
@@ -33,7 +34,10 @@
 
     <UIRef Id="WixUI_Advanced" />
 
-    <CustomAction Id="Overwrite_WixSetDefaultPerMachineFolder" Property="WixPerMachineFolder" Value="[ProgramFiles64Folder][ApplicationFolderName]" Execute="immediate" />
+    <CustomAction Id="Overwrite_WixSetDefaultPerMachineFolder"
+                  Property="WixPerMachineFolder"
+                  Value="[$(var.PlatformProgramFilesFolder)][ApplicationFolderName]"
+                  Execute="immediate" />
     <InstallUISequence>
       <Custom Action="Overwrite_WixSetDefaultPerMachineFolder" After="WixSetDefaultPerMachineFolder" />
     </InstallUISequence>

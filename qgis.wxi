@@ -15,8 +15,16 @@
 
   <?define QGISIcon="resources\qgis.ico" ?>
   <?if $(var.AppVersionMajor) = 2.14 ?>
-    <?define ProductCode="9012b3c2-6362-4db8-ab69-bc9e9bc9e414" ?>
+    <?define UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3" ?>
   <?else ?>
-    <?error No product code for this version of QGIS ?>
+    <?error No upgrade code for this version of QGIS $(var.AppVersionMajor)?>
+  <?endif ?>
+
+  <?if $(var.AppVersion) = 2.14.10 ?>
+    <?define ProductCode="9012b3c2-6362-4db8-ab69-bc9e9bc9e414" ?>
+  <?elseif $(var.AppVersion) = 2.14.9 ?>
+    <?define ProductCode="c66ce227-7886-419b-b295-28a2b9a7f446" ?>
+  <?else ?>
+    <?error No product code for this version of QGIS $(var.AppVersion)?>
   <?endif ?>
 </Include>
