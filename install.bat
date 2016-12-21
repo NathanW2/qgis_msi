@@ -1,1 +1,1 @@
-msiexec /i "qgis.msi" TARGETDIR="F:\temp\QGIS_Install"
+msiexec /i "QGIS-OSGeo4W-2.14.1-x64.msi" /lvie install.log

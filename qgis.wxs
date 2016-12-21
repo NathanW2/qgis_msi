@@ -20,11 +20,19 @@
     <Property Id="ARPHELPLINK" Value="http://www.qgis.org" />
     <Property Id="ApplicationFolderName" Value="$(var.AppRoot)" />
     <Property Id="WixAppFolder" Value="WixPerMachineFolder" />
-
     <WixVariable Id="WixUILicenseRtf" Value="resources\License.rtf" />
 
     <UIRef Id="WixUI_Advanced" />
 
+    <CustomAction Id="Overwrite_WixSetDefaultPerMachineFolder" Property="WixPerMachineFolder" Value="[ProgramFiles64Folder][ApplicationFolderName]" Execute="immediate" />
+    <InstallUISequence>
+      <Custom Action="Overwrite_WixSetDefaultPerMachineFolder" After="WixSetDefaultPerMachineFolder" />
+    </InstallUISequence>
+    <InstallExecuteSequence>
+      <Custom Action="Overwrite_WixSetDefaultPerMachineFolder" After="WixSetDefaultPerMachineFolder" />
+    </InstallExecuteSequence>
+
+    <SetProperty Id="ARPINSTALLLOCATION" Value="[APPLICATIONFOLDER]" After="CostFinalize" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFilesFolder)">
@@ -79,13 +87,11 @@
       </Component>
     </DirectoryRef>
 
-    <Feature Id="DefaultFeature" Level="1"
-             Title="QGIS"
+    <Feature Id="DefaultFeature" Level="1" Title="QGIS"
              Description="Core QGIS Install"
-             Display="expand"
-             Absent="disallow"
+             Display="expand" Absent="disallow"
              TypicalDefault="install">
-      <ComponentRef Id="rootfiles" />    
+      <ComponentRef Id="rootfiles" />
       <ComponentGroupRef Id="bin" />    
       <ComponentGroupRef Id="app" />    
       <ComponentGroupRef Id="etc" />    
@@ -93,11 +99,7 @@
       <ComponentGroupRef Id="lib" />    
       <ComponentGroupRef Id="share" />    
       <ComponentGroupRef Id="var" />    
-      <Feature Id="ShortcutFeatures"
-               Level="1"
-               Title="Shortcuts"
-               TypicalDefault="install"
-               Description="Create shortcuts">
+      <Feature Id="ShortcutFeatures" Level="1" Title="Shortcuts" TypicalDefault="install" Description="Create shortcuts">
         <ComponentRef Id="QGSDesktopShortcutDesktop" />
         <ComponentRef Id="QGISDesktopShortcutStartMenu" />
       </Feature>

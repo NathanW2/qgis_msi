@@ -17,7 +17,6 @@
   <?if $(var.AppVersionMajor) = 2.14 ?>
     <?define ProductCode="9012b3c2-6362-4db8-ab69-bc9e9bc9e414" ?>
   <?else ?>
-    <!-- TODO Add product codes for other major versions of QGIS.-->
-    <?define ProductCode="*" ?>
+    <?error No product code for this version of QGIS ?>
   <?endif ?>
 </Include>
