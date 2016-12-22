@@ -13,7 +13,12 @@
   <?define AppName="QGIS $(var.AppVersion)"?>
   <?define AppRoot="QGIS $(var.AppVersionMajor)"?>
 
-  <?define QGISIcon="resources\qgis.ico" ?>
+  <?define DesktopName="QGIS Desktop $(var.AppVersionMajor)"?>
+  <?define BrowserName="QGIS Browser $(var.AppVersionMajor)"?>
+
+  <?define QGISIcon="resources\QGIS.ico" ?>
+  <?define BrowserIcon="resources\browser.ico" ?>
+
   <?if $(var.AppVersionMajor) = 2.14 ?>
     <?define UpgradeCode="9e28b729-5b28-466e-8b6f-d3ae185e47e3" ?>
   <?else ?>

@@ -22,6 +22,7 @@
       DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 
     <Icon Id="qgis.ico" SourceFile="$(var.QGISIcon)" />
+    <Icon Id="browser.ico" SourceFile="$(var.BrowserIcon)" />
 
     <Property Id="ARPPRODUCTICON" Value="$(var.QGISIcon)" />
     <Property Id="ARPHELPLINK" Value="http://www.qgis.org" />
@@ -75,13 +76,24 @@
     <DirectoryRef Id="DesktopFolder">
       <Component Id="QGSDesktopShortcutDesktop" Guid="c98307c2-173b-427d-bafd-9af55e496327">
         <Shortcut Id="QGISDesktopShortcut" 
-                  Name="QGIS Desktop $(var.AppRoot)"
-                  Description="$(var.AppName)"
+                  Name="$(var.DesktopName)"
+                  Description="$(var.DesktopName)"
                   Target="[BIN_REF]nircmd.exe"
-                  Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
+                  Arguments="exec hide &quot;[BIN_REF]$(var.AppPackage).bat&quot;"
                   WorkingDirectory="BIN_REF"
                   Icon="qgis.ico"/>
-        <RemoveFolder Id="ApplicationShortcutDesktop" On="uninstall"/>
+        <RemoveFolder Id="RemoveShortcut" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="QGSBrowserShortcutDesktop" Guid="9877f3be-3c51-4167-b8ba-cb4e02721758">
+        <Shortcut Id="QGISBrowserShortcut" 
+                  Name="$(var.BrowserName)"
+                  Description="$(var.BrowserName)"
+                  Target="[BIN_REF]nircmd.exe"
+                  Arguments="exec hide &quot;[BIN_REF]$(var.AppPackage)-browser.bat&quot;"
+                  WorkingDirectory="BIN_REF"
+                  Icon="browser.ico"/>
+        <RemoveFolder Id="RemoveShortcut2" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
@@ -89,13 +101,24 @@
     <DirectoryRef Id="QGISProgramsFolder">
       <Component Id="QGISDesktopShortcutStartMenu" Guid="8ffea946-dae2-49ac-8859-61ceff794ff1">
         <Shortcut Id="QGISStartMenuShortcut" 
-                  Name="QGIS Desktop $(var.AppRoot)"
-                  Description="$(var.AppName)"
+                  Name="$(var.DesktopName)"
+                  Description="$(var.DesktopName)"
                   Target="[BIN_REF]nircmd.exe"
-                  Arguments="exec hide [BIN_REF]$(var.AppPackage).bat"
+                  Arguments="exec hide &quot;[BIN_REF]$(var.AppPackage).bat&quot;"
                   WorkingDirectory="BIN_REF"
                   Icon="qgis.ico"/>
-        <RemoveFolder Id="QGISProgramsFolder" On="uninstall"/>
+        <RemoveFolder Id="RemoveShortcut3" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+      <Component Id="QGSBrowserShortcutStartMenu" Guid="0a1e1422-4a97-4424-8951-9236ffeabd9b">
+        <Shortcut Id="QGISBrowserStartMenuShortcut" 
+                  Name="$(var.BrowserName)"
+                  Description="$(var.BrowserName)"
+                  Target="[BIN_REF]nircmd.exe"
+                  Arguments="exec hide &quot;[BIN_REF]$(var.AppPackage)-browser.bat&quot;"
+                  WorkingDirectory="BIN_REF"
+                  Icon="browser.ico"/>
+        <RemoveFolder Id="Removeshortcut4" On="uninstall"/>
         <RegistryValue Root="HKCU" Key="Software\QGIS\$(var.AppName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
       </Component>
     </DirectoryRef>
@@ -112,9 +135,13 @@
       <ComponentGroupRef Id="lib" />    
       <ComponentGroupRef Id="share" />    
       <ComponentGroupRef Id="var" />    
-      <Feature Id="ShortcutFeatures" Level="1" Title="Shortcuts" TypicalDefault="install" Description="Create shortcuts">
+      <Feature Id="ShortcutFeatures" Level="1" Title="QGIS Shortcuts"
+               TypicalDefault="install"
+               Description="Create shortcuts">
         <ComponentRef Id="QGSDesktopShortcutDesktop" />
         <ComponentRef Id="QGISDesktopShortcutStartMenu" />
+        <ComponentRef Id="QGSBrowserShortcutDesktop" />
+        <ComponentRef Id="QGSBrowserShortcutStartMenu" />
       </Feature>
     </Feature>
   </Product>
